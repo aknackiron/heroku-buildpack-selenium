@@ -40,12 +40,13 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
-topic "Fetching .debs for xserver-xorg-core libgl1-mesa-dri xvfb libglide3 xfs unzip"
-apt-get $APT_OPTIONS -y -d install xserver-xorg-core libgl1-mesa-dri xvfb libglide3 xfs unzip | indent
+topic "Fetching .debs for xvfb default-jdk firefox unzip"
+apt-get $APT_OPTIONS -y -d install xvfb default-jdk firefox unzip | indent
+# xserver-xorg-core libgl1-mesa-dri xvfb libglide3 xfs unzip | indent
 
-topic "Fetching google chrome"
-CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-curl $CHROME_URL -s -o $APT_CACHE_DIR/archives/google-chrome-stable_current_amd64.deb
+# topic "Fetching google chrome"
+# CHROME_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+# curl $CHROME_URL -s -o $APT_CACHE_DIR/archives/google-chrome-stable_current_amd64.deb
 
 mkdir -p $BUILD_DIR/.apt
 
@@ -60,9 +61,9 @@ export INCLUDE_PATH="$BUILD_DIR/.apt/usr/include:$INCLUDE_PATH"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 
-curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
-. bin/util
-. bin/java
+# curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
+# . bin/util
+# . bin/java
 
 # create default system.properties 
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
@@ -70,25 +71,25 @@ if [ ! -f ${BUILD_DIR}/system.properties ]; then
 fi
 
 # install JDK 
-javaVersion=$(detect_java_version ${BUILD_DIR})
-topic "Installing OpenJDK ${javaVersion}..."
-install_java ${BUILD_DIR} ${javaVersion}
-jdk_overlay ${BUILD_DIR}
+# javaVersion=$(detect_java_version ${BUILD_DIR})
+# topic "Installing OpenJDK ${javaVersion}..."
+# install_java ${BUILD_DIR} ${javaVersion}
+# jdk_overlay ${BUILD_DIR}
 
 # Create the vendor selenium directory
 mkdir -p $BUILD_DIR/vendor/selenium/bin
 
 # Download selenium standalone server
 topic "Downloading and installing Selenium"
-selenium_url="http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar"
+selenium_url="http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
 curl $selenium_url -s -o $BUILD_DIR/vendor/selenium/selenium.jar
 
 # Download google chrome driver
-topic "Downloading and installing ChromeDriver"
-chromedriver_url="http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip"
-curl $chromedriver_url -s -o $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
-unzip $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
-rm $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
+# topic "Downloading and installing ChromeDriver"
+# chromedriver_url="http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip"
+# curl $chromedriver_url -s -o $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
+# unzip $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
+# rm $BUILD_DIR/vendor/selenium/bin/chromedriver.zip
 
 topic "Writing profile script"
 mkdir -p $BUILD_DIR/.profile.d
