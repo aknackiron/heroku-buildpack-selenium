@@ -41,7 +41,7 @@ topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
 topic "Fetching .debs for xvfb default-jdk firefox unzip"
-apt-get $APT_OPTIONS -y -d install xvfb libgl1-mesa-dri libglide3 default-jdk firefox unzip node | indent
+apt-get $APT_OPTIONS -y -d install xvfb libgl1-mesa-dri libglide3  libnotify4 default-jdk firefox unzip nodejs | indent
 # xserver-xorg-core libgl1-mesa-dri xvfb libglide3 xfs unzip | indent
 
 # topic "Fetching google chrome"
@@ -77,12 +77,14 @@ fi
 # jdk_overlay ${BUILD_DIR}
 
 # Create the vendor selenium directory
-mkdir -p $BUILD_DIR/vendor/selenium/bin
+# mkdir -p $BUILD_DIR/vendor/selenium/bin
 
 # Download selenium standalone server
-topic "Downloading and installing Selenium"
-selenium_url="http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
-curl $selenium_url -s -o $BUILD_DIR/vendor/selenium/selenium.jar
+# topic "Downloading and installing Selenium"
+# selenium_url="http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
+# curl $selenium_url -s -o $BUILD_DIR/vendor/selenium/selenium.jar
+./get-selenium-server.sh
+
 
 # Download google chrome driver
 # topic "Downloading and installing ChromeDriver"
