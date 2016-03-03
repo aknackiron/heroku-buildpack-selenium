@@ -77,14 +77,12 @@ fi
 # jdk_overlay ${BUILD_DIR}
 
 # Create the vendor selenium directory
-# mkdir -p $BUILD_DIR/vendor/selenium/bin
+mkdir -p $BUILD_DIR/vendor/selenium/bin
 
 # Download selenium standalone server
-# topic "Downloading and installing Selenium"
-# selenium_url="http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
-# curl $selenium_url -s -o $BUILD_DIR/vendor/selenium/selenium.jar
-./get-selenium-server.sh
-
+topic "Downloading and installing Selenium"
+selenium_url="http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
+curl $selenium_url -s -o $BUILD_DIR/vendor/selenium/bin/selenium.jar
 
 # Download google chrome driver
 # topic "Downloading and installing ChromeDriver"
